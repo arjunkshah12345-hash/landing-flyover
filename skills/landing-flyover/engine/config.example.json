@@ -18,6 +18,7 @@
     { "sel": ".testimonial", "role": "testimonial" }
   ],
   "hide": [".cookie-banner", "#intercom-container"],
+  "waitFor": [".live-counter"],
   "css": "",
   "routes": [],
   "videoTime": 1.0,
