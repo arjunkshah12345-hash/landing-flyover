@@ -46,6 +46,7 @@ Read `dom.txt` and fill `config.json`:
 | `testimonial` | one quote/terminal card; shows a 34px white edge | 22 → 112 · 30° |
 
 Keep most lifts tiny (20–40px). Aim for 15–35 pieces across the whole page, a few per section. Nested pieces are fine: list the inner one (`photo`) **before** its card.
+- `waitFor`: selectors of live numbers fed by an API (visitor counters, token meters). Capture waits until each shows a non-zero digit before freezing the page; otherwise they can film as "0".
 - `hide`: cookie banners, chat widgets, popups. `css`: any extra CSS to force the final state of scroll-driven effects (e.g. words that light up on scroll). `routes`: `[{ "match": "**/broken.jpg*", "file": "/abs/local/copy.jpg" }]` for assets the live site fails to serve.
 
 ## 3. Capture and lock the page

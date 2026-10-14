@@ -30,6 +30,11 @@ await p.waitForTimeout(1500);
 const H0 = await p.evaluate(() => document.documentElement.scrollHeight);
 for (let y = 0; y < H0; y += 300) { await p.evaluate(y => scrollTo(0, y), y); await p.waitForTimeout(140); }
 await p.waitForTimeout(2500);
+// live numbers (counters fed by an API) must have loaded before anything is frozen
+for (const sel of cfg.waitFor || []) {
+  await p.waitForFunction(sel => { const e = document.querySelector(sel); return e && /[1-9]/.test(e.textContent); }, sel, { timeout: 15000 })
+    .catch(() => console.warn(`waitFor: "${sel}" never showed a non-zero value; it will film as-is`));
+}
 
 // lock the page: finish animations, freeze video, collapse pinned scroll runways, unfix fixed bars
 await p.evaluate(async ({ hide, css, videoTime }) => {
