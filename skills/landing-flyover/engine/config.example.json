@@ -1,0 +1,25 @@
+{
+  "url": "https://example.com",
+  "brand": "Example",
+  "logo": "./logo.png",
+  "title": { "line1": "Same agent.", "tail": "Less context." },
+  "hero": {
+    "section": ".hero",
+    "mockup": ".hero img, .hero video, .hero [class*=mockup], .hero [class*=frame]",
+    "tileAnchor": ".hero a.button:last-of-type",
+    "footerTitle": "footer h2, section:last-of-type h2"
+  },
+  "layers": [
+    { "sel": ".hero .badge", "role": "chip" },
+    { "sel": ".hero a.button", "role": "button" },
+    { "sel": ".hero [class*=frame]", "role": "mockup" },
+    { "sel": ".features .card img", "role": "photo" },
+    { "sel": ".features .card", "role": "card" },
+    { "sel": ".testimonial", "role": "testimonial" }
+  ],
+  "hide": [".cookie-banner", "#intercom-container"],
+  "css": "",
+  "routes": [],
+  "videoTime": 1.0,
+  "track": { "file": "", "drop": "auto" }
+}

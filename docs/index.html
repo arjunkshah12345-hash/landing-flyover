@@ -1,0 +1,360 @@
+<!--
+DIRECTION   : Ledger Light. Developers install an agent skill; the film it renders is the product UI.
+REGISTER    : Confident. One bold device: the rendered film, full width, as the hero subject.
+AXES        : ground cool studio floor #f6f7f9 · type grotesk + italic serif tail (Geist 500 + Instrument Serif) · image the real output film and its frames · composition centred hero, asymmetric chapters · motion blur-in word resolve
+DEFAULT?    : 2/6 matched → DIFFERENT FROM DEFAULT BY: cool ground, no mono uppercase labels, film hero instead of a line drawing, no spec bands
+MOTIF       : "statement. italic tail." (the film's end card) → hero h1, chapter heads, finale, copy toast, footer sign-off
+TYPE        : display Geist 500 · text Geist 400 · tail Instrument Serif italic · commands Geist Mono
+SCALE       : display 72/1.0/-0.035em · h2 48/1.05/-0.025em · body 16 · small 13
+PALETTE     : paper #f6f7f9 · ink #111114 · ink-2 @64% · hairline @9% · accent #2b59ff → ONLY the copy button state and the timeline playhead
+GRID        : 12/24 · container 1200 · margin 20→80 · section 96–144
+HERO        : centred statement + install command, then the film bleeding wide
+IMAGERY     : the real output (supercompress.dev fly-over) and its frames
+CONVERSION  : copy `npx skills add …` → hero, finale
+MOTION      : ease cubic-bezier(.16,1,.3,1) · UI 240ms · reveal 850ms · primitive blur-in (the film's word reveal)
+IMAGES      : none generated: real frames from the render
+SIGNATURES  : film-synced timeline playhead (§ scroll-spy variant), two-tone statement + italic tail, frame strip
+VOICE       : "Your landing page, as a film." · "One camera. No cuts." · "Send the link. Get the film."
+-->
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>landing-flyover · your landing page, as a film</title>
+<meta name="description" content="An agent skill that turns any landing page into a 14.5-second 3D fly-over film. Captured with Playwright, rendered in WebGL2 on your own GPU, encoded with ffmpeg.">
+<meta property="og:title" content="landing-flyover · your landing page, as a film">
+<meta property="og:description" content="Send your agent a link. Get a 14.5-second 3D fly-over of your landing page, made with code.">
+<meta property="og:image" content="media/poster.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%23111114'/><path d='M8 21 L16 9 L24 21' stroke='%23f6f7f9' stroke-width='3' fill='none' stroke-linejoin='round'/></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500&family=Geist+Mono:wght@400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/tokens.css">
+<script>document.documentElement.classList.add('js')</script>
+<style>
+:root{
+  --paper:#f6f7f9; --paper-2:#eef0f3; --surface:#ffffff;
+  --ink-rgb:17 17 20;
+  --ink-2:rgb(var(--ink-rgb) / .64); --ink-3:rgb(var(--ink-rgb) / .68); --ink-4:rgb(var(--ink-rgb) / .40);
+  --hairline:rgb(var(--ink-rgb) / .09); --hairline-2:rgb(var(--ink-rgb) / .15);
+  --accent:#2b59ff; --accent-ink:#ffffff; --focus:var(--accent);
+  --font-display:"Geist", ui-sans-serif, system-ui, sans-serif;
+  --font-text:var(--font-display);
+  --font-serif:"Instrument Serif", Georgia, serif;
+  --font-mono:"Geist Mono", ui-monospace, monospace;
+  --display:clamp(2.6rem, 1.2rem + 3.9vw, 4.75rem);
+  --display-wt:500; --display-lh:1.0; --display-ls:-0.035em;
+  --h2-wt:500; --h2-ls:-0.025em;
+  --container:1200px;
+  --r-btn:9999px; --r-card:10px; --r-media:18px;
+  --btn-h:48px;
+}
+body{background:var(--paper)}
+::selection{background:rgb(var(--ink-rgb) / .9);color:var(--paper)}
+a{color:inherit}
+.tail{font-family:var(--font-serif);font-style:italic;font-weight:400;letter-spacing:-.01em;color:var(--ink-3)}
+.t-display .tail{font-size:1.1em;letter-spacing:-.02em}
+.t-h2 .tail{font-size:1.08em}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgb(246 247 249 / .82);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color var(--t-ui) var(--ease)}
+.nav.is-scrolled{border-bottom-color:var(--hairline)}
+.nav .container{display:flex;align-items:center;justify-content:space-between;height:var(--nav-h)}
+.wordmark{display:flex;align-items:center;gap:10px;min-height:44px;font:500 15px/1 var(--font-display);letter-spacing:-.02em;text-decoration:none}
+.wordmark i{font:italic 400 18px/1 var(--font-serif);color:var(--ink-3);letter-spacing:-.01em}
+.mark{width:22px;height:22px;border-radius:6px;background:var(--ink);display:grid;place-items:center}
+.mark svg{width:12px;height:12px}
+.nav-links{display:flex;align-items:center;gap:28px;font:400 var(--small)/1 var(--font-text)}
+.nav-links a{text-decoration:none;color:var(--ink-2);transition:color var(--t-fast) var(--ease)}
+.nav-links a:hover{color:var(--ink)}
+
+/* hero */
+.hero{padding-top:clamp(56px,4vw + 32px,104px);text-align:center}
+.hero h1{max-width:13ch;margin:0 auto}
+.hero .sub{max-width:34rem;margin:22px auto 0;color:var(--ink-2);font-size:clamp(1rem,.95rem + .25vw,1.125rem);line-height:1.5}
+.cmd{display:inline-flex;align-items:center;gap:14px;height:var(--btn-h);padding:0 6px 0 20px;border-radius:9999px;background:var(--surface);box-shadow:var(--ring),0 1px 2px rgb(var(--ink-rgb) / .04);font:400 14px/1 var(--font-mono);letter-spacing:-.01em;color:var(--ink)}
+.cmd .p{color:var(--ink-3)}
+.copy{height:36px;padding:1px 16px 0;border:0;border-radius:9999px;background:var(--ink);color:var(--paper);font:500 13px/1 var(--font-display);cursor:pointer;transition:background var(--t-ui) var(--ease)}
+.copy:hover{background:rgb(var(--ink-rgb) / .86)}
+.copy.is-done{background:var(--accent)}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px}
+
+/* film */
+.film-wrap{margin-top:clamp(48px,5vw,80px);padding-inline:clamp(12px,2.2vw,40px)}
+.film{position:relative;max-width:1360px;margin:0 auto;border-radius:var(--r-media);overflow:hidden;background:#eef0f3;box-shadow:0 0 0 1px var(--hairline),0 40px 80px -48px rgb(26 33 51 / .35);aspect-ratio:1440/1152}
+.film video{display:block;width:100%;height:100%;object-fit:cover}
+.film-ctrls{position:absolute;right:16px;bottom:16px;display:flex;gap:8px}
+.chip{height:34px;padding:1px 14px 0;border:0;border-radius:9999px;background:rgb(255 255 255 / .9);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);box-shadow:var(--ring);font:500 12.5px/1 var(--font-display);color:var(--ink);cursor:pointer}
+.film-cap{display:flex;justify-content:space-between;gap:16px;max-width:1360px;margin:14px auto 0;padding-inline:4px;font:400 var(--small)/1.4 var(--font-text);color:var(--ink-3)}
+
+/* timeline */
+.timeline{margin-top:var(--s-8);padding-bottom:0}
+.tl-head{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);align-items:end}
+.tl-head h2{grid-column:1/8;margin:0}
+.tl-head p{grid-column:9/13;margin:0;color:var(--ink-2)}
+.track{position:relative;margin-top:48px;height:56px;display:flex;border-radius:10px;overflow:hidden;box-shadow:var(--ring)}
+.seg{position:relative;display:flex;align-items:flex-end;padding:0 10px 9px;font:500 12px/1.2 var(--font-display);color:var(--ink-2);border-right:1px solid var(--hairline);background:var(--surface);white-space:nowrap;overflow:hidden}
+.seg:last-child{border-right:0}
+.seg small{display:block;font:400 11px/1.2 var(--font-mono);color:var(--ink-3);margin-bottom:3px}
+.seg.flight{flex:8.2}.seg.rise{flex:1.05}.seg.over{flex:.22;padding:0}.seg.dive{flex:.5;padding-inline:6px}.seg.title{flex:4.53}
+.playhead{position:absolute;top:0;bottom:0;width:2px;background:var(--accent);left:0;pointer-events:none;will-change:transform}
+.ticks{display:flex;justify-content:space-between;margin-top:8px;font:400 11px/1 var(--font-mono);color:var(--ink-3)}
+.frames{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin-top:28px}
+.frames figure{margin:0}
+.frames img{display:block;width:100%;aspect-ratio:1440/1152;object-fit:cover;border-radius:8px;box-shadow:var(--ring);cursor:pointer;transition:transform var(--t-ui) var(--ease)}
+.frames img:hover{transform:translateY(-2px)}
+.frames figcaption{margin-top:8px;font:400 12px/1.35 var(--font-text);color:var(--ink-3)}
+.frames figcaption b{font:400 11px/1 var(--font-mono);color:var(--ink);margin-right:6px}
+
+/* chapters */
+.chapter{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--gap);row-gap:40px;padding-block:var(--s-9);border-top:1px solid var(--hairline)}
+.chapter>header{grid-column:1/6}
+.chapter>header h2{margin:0}
+.chapter>header p{margin:20px 0 0;color:var(--ink-2);max-width:26rem}
+.steps{grid-column:7/13;list-style:none;margin:0;padding:0;counter-reset:s}
+.steps li{display:grid;grid-template-columns:56px 1fr;padding:22px 0;border-top:1px solid var(--hairline)}
+.steps li:first-child{border-top:0;padding-top:4px}
+.steps .n{font:400 var(--h3)/1 var(--font-serif);font-style:italic;color:var(--ink-3)}
+.steps h3{margin:0;font:500 var(--h3)/1.2 var(--font-display);letter-spacing:-.015em}
+.steps p{margin:8px 0 0;color:var(--ink-2)}
+code,.mono{font:400 .9em/1 var(--font-mono);letter-spacing:-.01em}
+.steps code{color:var(--ink)}
+
+.inputs{grid-column:7/13;display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--hairline);border-radius:12px;overflow:hidden;box-shadow:var(--ring)}
+.inputs div{background:var(--surface);padding:22px 22px 24px}
+.inputs h3{margin:0 0 6px;font:500 15px/1.3 var(--font-display);letter-spacing:-.01em}
+.inputs p{margin:0;color:var(--ink-2);font-size:var(--small);line-height:1.5}
+.prompt{grid-column:7/13;margin:0;padding:22px 24px;border-radius:12px;background:var(--ink);color:#e9ebef;font:400 14px/1.6 var(--font-mono);letter-spacing:-.01em;white-space:pre-wrap}
+.prompt .p{color:rgb(233 235 239 / .45)}
+
+.specs{grid-column:7/13;margin:0;display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr)}
+.specs dt,.specs dd{margin:0;padding:15px 0;border-top:1px solid var(--hairline)}
+.specs dt{color:var(--ink-3);font-size:var(--small);padding-top:17px}
+.specs dd{font-variant-numeric:tabular-nums}
+.banned{grid-column:1/6;align-self:end;margin:0;color:var(--ink-3);font-size:var(--small);line-height:1.6;max-width:24rem}
+.banned b{color:var(--ink);font-weight:500}
+
+/* finale */
+.finale{padding-block:var(--s-10) var(--s-9);text-align:center;border-top:1px solid var(--hairline)}
+.finale h2{margin:0 auto;max-width:14ch}
+.finale .hero-actions{margin-top:40px}
+
+/* footer */
+.foot{border-top:1px solid var(--hairline);padding-block:56px 40px;font-size:var(--small)}
+.foot .grid{row-gap:32px}
+.foot h4{margin:0 0 14px;font:500 var(--small)/1 var(--font-display);color:var(--ink)}
+.foot ul{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.foot a{color:var(--ink-2);text-decoration:none}
+.foot a:hover{color:var(--ink)}
+.foot .sign{grid-column:1/5}
+.foot .sign p{margin:12px 0 0;color:var(--ink-3);max-width:20rem}
+.foot .c1{grid-column:6/8}.foot .c2{grid-column:8/10}.foot .c3{grid-column:10/13}
+.legal{display:flex;justify-content:space-between;gap:16px;margin-top:56px;color:var(--ink-3);font-size:12px}
+
+/* toast */
+.toast{position:fixed;left:50%;bottom:28px;z-index:30;transform:translate(-50%,16px);opacity:0;padding:12px 20px 11px;border-radius:9999px;background:var(--ink);color:var(--paper);font:500 14px/1 var(--font-display);pointer-events:none;transition:opacity var(--t-ui) var(--ease),transform var(--t-ui) var(--ease)}
+.toast i{font:italic 400 16px/1 var(--font-serif);color:rgb(246 247 249 / .62)}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+
+/* reveal: the film's word resolve */
+.js [data-reveal]{opacity:0;filter:blur(10px);transform:translateY(12px);transition:opacity var(--t-reveal) var(--ease),filter var(--t-reveal) var(--ease),transform var(--t-reveal) var(--ease)}
+.js [data-reveal].is-in{opacity:1;filter:none;transform:none}
+.js .hero [data-reveal]{transition-delay:calc(var(--i,0) * 90ms)}
+@media (prefers-reduced-motion:reduce){
+  .js [data-reveal]{filter:none;transform:none;transition:opacity 300ms linear}
+  .playhead{display:none}
+}
+
+/* mobile composition */
+@media (max-width:860px){
+  .nav-links a:not(.gh){display:none}
+  .tl-head h2,.tl-head p{grid-column:1/-1}.tl-head p{margin-top:16px}
+  .chapter>header,.steps,.inputs,.prompt,.specs,.banned{grid-column:1/-1}
+  .inputs{grid-template-columns:1fr}
+  .frames{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .seg{font-size:0;padding:0}.seg small{display:none}
+  .foot .sign{grid-column:1/-1}.foot .c1,.foot .c2,.foot .c3{grid-column:span 4}
+  .film-cap{flex-direction:column;gap:4px}
+}
+@media (max-width:520px){
+  .cmd{width:100%;justify-content:space-between;font-size:12px;padding-left:16px}
+  .cmd .p{display:none}
+  .hero-actions{flex-direction:column;align-items:stretch}
+  .hero-actions .btn{justify-content:center}
+  .film-ctrls{right:10px;bottom:10px}
+  .foot .c1,.foot .c2,.foot .c3{grid-column:1/-1}
+  .legal{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" aria-label="Main">
+  <div class="container">
+    <a class="wordmark" href="#top" aria-label="landing-flyover home">
+      <span class="mark" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1.5 9 L6 2.5 L10.5 9" stroke="#f6f7f9" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></span>
+      landing-flyover
+    </a>
+    <div class="nav-links">
+      <a href="#how">How it works</a>
+      <a href="#film">The film</a>
+      <a href="https://skills.sh/arjunkshah12345-hash/landing-flyover">skills.sh</a>
+      <a class="gh btn btn--ghost btn--sm" href="https://github.com/arjunkshah12345-hash/landing-flyover">GitHub</a>
+    </div>
+  </div>
+</nav>
+
+<main id="top">
+  <section class="hero">
+    <div class="container">
+      <h1 class="t-display" data-reveal style="--i:0">Your landing page, <span class="tail">as a film.</span></h1>
+      <p class="sub" data-reveal style="--i:1">An agent skill that captures your site and flies a camera over it: 14.5 seconds, one continuous shot, rendered in WebGL on your own GPU.</p>
+      <div class="hero-actions" data-reveal style="--i:2">
+        <div class="cmd"><span class="p">$</span><span class="cmd-text">npx skills add arjunkshah12345-hash/landing-flyover</span><button class="copy" type="button" data-copy="npx skills add arjunkshah12345-hash/landing-flyover">Copy</button></div>
+        <a class="btn btn--ghost" href="#film">Watch the example <span class="arr" aria-hidden="true">↓</span></a>
+      </div>
+    </div>
+    <div class="film-wrap" id="film" data-reveal style="--i:3">
+      <div class="film">
+        <video id="film-video" src="media/flyover.mp4" poster="media/poster.jpg" autoplay muted loop playsinline preload="metadata" aria-label="Example: a 3D fly-over film of the supercompress.dev landing page"></video>
+        <div class="film-ctrls">
+          <button class="chip" type="button" id="sound">Sound on</button>
+          <button class="chip" type="button" id="pause">Pause</button>
+        </div>
+      </div>
+      <p class="film-cap"><span>Example: supercompress.dev, rendered by the skill, unedited.</span><span>1440 × 1152 · 60 fps · 16-subframe motion blur · H.264</span></p>
+    </div>
+  </section>
+
+  <div class="container">
+    <section class="timeline" aria-labelledby="tl-h">
+      <div class="tl-head">
+        <h2 class="t-h2" id="tl-h" data-reveal>One camera. <span class="tail">No cuts.</span></h2>
+        <p data-reveal>The camera glides down your page at one steady speed, rises straight overhead to show it whole, then dives into the hero and lands it under your closing line. The timing is fixed; your page fills it.</p>
+      </div>
+      <div class="track" data-reveal aria-hidden="true">
+        <div class="seg flight"><span><small>0–8.2s</small>Flight</span></div>
+        <div class="seg rise"><span><small>7.75s</small>Rise</span></div>
+        <div class="seg over"></div>
+        <div class="seg dive"><span><small>9.47</small>Dive</span></div>
+        <div class="seg title"><span><small>9.97–14.5s</small>Title card</span></div>
+        <div class="playhead" id="playhead"></div>
+      </div>
+      <div class="ticks" aria-hidden="true"><span>0s</span><span>3.6</span><span>7.25</span><span>10.9</span><span>14.5s</span></div>
+      <div class="frames" data-reveal>
+        <figure><img src="media/f_0.6.jpg" alt="Frame at 0.6 seconds: low over the hero, logo tiles lifting beside the button" data-t="0.6" loading="lazy"><figcaption><b>0.6s</b>Tiles lift off beside the button</figcaption></figure>
+        <figure><img src="media/f_2.5.jpg" alt="Frame at 2.5 seconds: feature photos stand up toward the lens" data-t="2.5" loading="lazy"><figcaption><b>2.5s</b>Photos stand up toward the lens</figcaption></figure>
+        <figure><img src="media/f_5.0.jpg" alt="Frame at 5 seconds: the benchmark table crossing the middle of the frame" data-t="5" loading="lazy"><figcaption><b>5.0s</b>Sharp at the centre, soft below</figcaption></figure>
+        <figure><img src="media/f_6.6.jpg" alt="Frame at 6.6 seconds: an install card raised with its white edge showing" data-t="6.6" loading="lazy"><figcaption><b>6.6s</b>The testimonial rises</figcaption></figure>
+        <figure><img src="media/f_9.3.jpg" alt="Frame at 9.3 seconds: the whole page overhead as one strip" data-t="9.3" loading="lazy"><figcaption><b>9.3s</b>The whole page, overhead</figcaption></figure>
+        <figure><img src="media/f_11.2.jpg" alt="Frame at 11.2 seconds: the hero landed as a card under the title" data-t="11.2" loading="lazy"><figcaption><b>11.2s</b>The hero lands as a card</figcaption></figure>
+      </div>
+    </section>
+
+    <section class="chapter" id="how" aria-labelledby="how-h" style="margin-top:var(--s-8)">
+      <header>
+        <h2 class="t-h2" id="how-h" data-reveal>Three scripts. <span class="tail">Your machine.</span></h2>
+        <p data-reveal>Nothing is uploaded and nothing is generated by a video model. Your agent drives a real browser, a WebGL2 page and ffmpeg, and checks its own work before the final render.</p>
+      </header>
+      <ol class="steps">
+        <li data-reveal><span class="n">01</span><div><h3>Capture</h3><p><code>capture.mjs</code> opens your page at 1440px, 2× scale, scrolls it once so lazy images and counters finish, collapses scroll-pinned sections, then saves the page and every lifting piece on transparency.</p></div></li>
+        <li data-reveal><span class="n">02</span><div><h3>Film</h3><p><code>film.js</code> lays the page on a studio floor and computes every frame from time alone: one integrated speed curve, per-pixel depth of field, lifted cards with their own shadows.</p></div></li>
+        <li data-reveal><span class="n">03</span><div><h3>Render</h3><p><code>render.mjs</code> runs it on your GPU at 60fps with 16 motion-blur subframes. <code>flow.py</code> proves the glide never stalls; <code>score.py</code> lands your track's drop on the title.</p></div></li>
+      </ol>
+    </section>
+
+    <section class="chapter" aria-labelledby="in-h">
+      <header>
+        <h2 class="t-h2" id="in-h" data-reveal>Send the link. <span class="tail">Answer four questions.</span></h2>
+        <p data-reveal>Your agent asks once, then shows you seven stills before it renders anything.</p>
+      </header>
+      <div class="inputs" data-reveal>
+        <div><h3>Your landing page</h3><p>Any public URL. Long pages simply glide faster.</p></div>
+        <div><h3>Brand and logo mark</h3><p>Four logo tiles lift off beside your hero button and follow the film to the end.</p></div>
+        <div><h3>A closing line</h3><p>A short statement, then an italic tail, like the one on this page.</p></div>
+        <div><h3>A track, if you like</h3><p>Optional. The drop is found and lands on 9.97s, as the title appears.</p></div>
+      </div>
+      <pre class="prompt" data-reveal><span class="p">you ›</span> Make a landing flyover of https://your.site.
+       Closing line: "Ship it today." / "Sleep tonight."</pre>
+    </section>
+
+    <section class="chapter" aria-labelledby="spec-h">
+      <header>
+        <h2 class="t-h2" id="spec-h" data-reveal>Built like a camera. <span class="tail">Not a slideshow.</span></h2>
+        <p data-reveal>The numbers your agent works to, all of them written into the skill.</p>
+      </header>
+      <dl class="specs" data-reveal>
+        <dt>Output</dt><dd>1440 × 1152, 60 fps, H.264 MP4, 14.5 s</dd>
+        <dt>Lens</dt><dd>1880 px focal length, 56° tilt, 1360 → 1700 px out</dd>
+        <dt>Depth of field</dt><dd>Per pixel, 40 golden-angle taps from mip levels, capped at 120 px</dd>
+        <dt>Motion blur</dt><dd>16 subframes across 0.7 of a frame</dd>
+        <dt>Text</dt><dd>Mipmaps and 16× anisotropic filtering, so far text never shimmers</dd>
+        <dt>Shadows</dt><dd>Each piece casts its own: #1a2133, offset with height, 26%</dd>
+        <dt>Checks</dt><dd>Optical flow on a 30 fps preview: no stalls, no zoom-in</dd>
+      </dl>
+      <p class="banned" data-reveal><b>Never in the film:</b> cuts, crossfades, stops or surges in the glide, the camera turning, zooming in during the flight, glows, or text over your page before the end card.</p>
+    </section>
+  </div>
+
+  <section class="finale">
+    <div class="container">
+      <h2 class="t-display" data-reveal>Send the link. <span class="tail">Get the film.</span></h2>
+      <div class="hero-actions" data-reveal>
+        <div class="cmd"><span class="p">$</span><span class="cmd-text">npx skills add arjunkshah12345-hash/landing-flyover</span><button class="copy" type="button" data-copy="npx skills add arjunkshah12345-hash/landing-flyover">Copy</button></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="container">
+    <div class="grid">
+      <div class="sign">
+        <a class="wordmark" href="#top"><span class="mark" aria-hidden="true"><svg viewBox="0 0 12 12"><path d="M1.5 9 L6 2.5 L10.5 9" stroke="#f6f7f9" stroke-width="1.8" fill="none" stroke-linejoin="round" stroke-linecap="round"/></svg></span>landing-flyover <i>fin.</i></a>
+        <p>Works with Claude Code, Codex, Cursor and any agent that can run a shell.</p>
+      </div>
+      <div class="c1"><h4>Skill</h4><ul><li><a href="https://github.com/arjunkshah12345-hash/landing-flyover">GitHub</a></li><li><a href="https://skills.sh/arjunkshah12345-hash/landing-flyover">skills.sh</a></li><li><a href="https://github.com/arjunkshah12345-hash/landing-flyover/blob/main/skills/landing-flyover/SKILL.md">SKILL.md</a></li></ul></div>
+      <div class="c2"><h4>Made with</h4><ul><li><a href="https://playwright.dev">Playwright</a></li><li><a href="https://developer.mozilla.org/docs/Web/API/WebGL2RenderingContext">WebGL2</a></li><li><a href="https://ffmpeg.org">ffmpeg</a></li></ul></div>
+      <div class="c3"><h4>Example</h4><ul><li><a href="https://supercompress.dev">supercompress.dev</a></li><li><a href="media/flyover.mp4" download>Download the MP4</a></li><li><a href="https://mixkit.co/free-stock-music/">Music: Mixkit</a></li></ul></div>
+    </div>
+    <div class="legal"><span>MIT licensed. Fonts: Geist and Instrument Serif.</span><span id="clock" class="t-num" aria-live="off"></span></div>
+  </div>
+</footer>
+
+<div class="toast" id="toast" role="status" aria-live="polite">Copied. <i>Now paste it into your agent.</i></div>
+
+<script type="module">
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+// reveals
+const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
+// nav hairline
+const nav = document.querySelector('.nav');
+addEventListener('scroll', () => nav.classList.toggle('is-scrolled', scrollY > 8), { passive: true });
+// copy
+const toast = document.getElementById('toast'); let tt;
+document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(b.dataset.copy); } catch {}
+  b.textContent = 'Copied'; b.classList.add('is-done'); toast.classList.add('is-on');
+  clearTimeout(tt); tt = setTimeout(() => { b.textContent = 'Copy'; b.classList.remove('is-done'); toast.classList.remove('is-on'); }, 1800);
+}));
+// film controls + timeline playhead synced to the film
+const v = document.getElementById('film-video'), ph = document.getElementById('playhead'), track = ph.parentElement;
+const pause = document.getElementById('pause'), sound = document.getElementById('sound');
+if (reduce) { v.removeAttribute('autoplay'); v.pause(); pause.textContent = 'Play'; }
+pause.addEventListener('click', () => { if (v.paused) { v.play(); pause.textContent = 'Pause'; } else { v.pause(); pause.textContent = 'Play'; } });
+sound.addEventListener('click', () => { v.muted = !v.muted; sound.textContent = v.muted ? 'Sound on' : 'Sound off'; if (!v.muted && v.paused) { v.play(); pause.textContent = 'Pause'; } });
+const tick = () => { const d = v.duration || 14.5; ph.style.transform = `translateX(${(v.currentTime / d) * (track.clientWidth - 2)}px)`; requestAnimationFrame(tick); };
+requestAnimationFrame(tick);
+document.querySelectorAll('.frames img').forEach(img => img.addEventListener('click', () => {
+  v.currentTime = +img.dataset.t; v.pause(); pause.textContent = 'Play';
+  document.getElementById('film').scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block: 'center' });
+}));
+// footer clock: the film's own timecode
+const clock = document.getElementById('clock');
+setInterval(() => { clock.textContent = `film at ${(v.currentTime || 0).toFixed(2)}s of 14.50s`; }, 100);
+</script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+node_modules/
+.DS_Store
+# per-run outputs if someone renders inside the repo
+skills/landing-flyover/engine/capture/
+skills/landing-flyover/engine/stills/
+skills/landing-flyover/engine/audio/
+skills/landing-flyover/engine/*.mp4
+skills/landing-flyover/engine/config.json
+skills/landing-flyover/engine/cam.json
+skills/landing-flyover/engine/dom.txt
+skills/landing-flyover/engine/inspect.png
+*.mp3
